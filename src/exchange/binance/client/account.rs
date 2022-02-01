@@ -94,7 +94,10 @@ impl BaseClient {
         .to_string();
         let buy: OrderRequest = OrderRequest {
             symbol: pair.symbol,
-            quantity: qty.round_dp(pair.base_increment.normalize().scale()),
+            quantity: qty.round_dp_with_strategy(
+                pair.base_increment.normalize().scale(),
+                RoundingStrategy::ToZero,
+            ),
             price: Some(price.round_dp_with_strategy(
                 pair.quote_increment.normalize().scale(),
                 RoundingStrategy::ToZero,
@@ -129,7 +132,10 @@ impl BaseClient {
         .to_string();
         let sell: OrderRequest = OrderRequest {
             symbol: pair.symbol,
-            quantity: qty.round_dp(pair.base_increment.normalize().scale()),
+            quantity: qty.round_dp_with_strategy(
+                pair.base_increment.normalize().scale(),
+                RoundingStrategy::ToZero,
+            ),
             price: Some(price.round_dp_with_strategy(
                 pair.quote_increment.normalize().scale(),
                 RoundingStrategy::AwayFromZero,
